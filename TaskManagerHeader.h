@@ -23,7 +23,10 @@ private:
     string ProcessID;
     string ProcessMemoryUsage;
 public:
-
+    inline Process(string pName, string pID, string pMemoryUsage);
+    inline string getProcessName();
+    inline string getProcessID();
+    inline string getProcessMemoryUsage();
 };
 
 class RunningProcesses{

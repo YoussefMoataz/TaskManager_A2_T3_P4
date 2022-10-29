@@ -1,7 +1,6 @@
 #include "TaskManagerFunctions.cpp"
 
-
-int main(void) {
+int main() {
 
     RunningProcesses().getAndPrintRunningProcesses();
 
