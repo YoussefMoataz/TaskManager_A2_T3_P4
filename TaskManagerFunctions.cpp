@@ -70,9 +70,9 @@ void RunningProcesses::getAndPrintRunningProcesses() {
 
             PROCESS_MEMORY_COUNTERS pmc;
             if (GetProcessMemoryInfo(hProcess, &pmc, sizeof(pmc))) {
-//                _tprintf(TEXT("%llu  (PID: %u) - "), pmc.WorkingSetSize);
+//                _tprintf(TEXT("%llu  (PID: %u) - "), pmc.WorkingSetSize / 8 / 1024);
 
-                processMemoryUsageToAdd = to_string(pmc.WorkingSetSize);
+                processMemoryUsageToAdd = to_string(pmc.WorkingSetSize / 8 / 1024);
 
 
                 // Print the process name and identifier.
