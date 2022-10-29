@@ -9,12 +9,17 @@
 
 #include <iostream>
 #include <vector>
+#include <iomanip>
 #include <windows.h>
 #include <stdio.h>
 #include <tchar.h>
 #include <psapi.h>
 
 using namespace std;
+
+inline int NamePrintLength = 35;
+inline int IDPrintLength = 20;
+inline int MemoryUsedPrintLength = 20;
 
 class Process{
 
@@ -32,6 +37,8 @@ public:
 class RunningProcesses{
 private:
     vector<Process> RunningProcesses;
+    inline void printTheRunningProcesses();
 public:
     inline void getAndPrintRunningProcesses();
+
 };

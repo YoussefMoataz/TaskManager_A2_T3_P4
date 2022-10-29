@@ -11,15 +11,15 @@ Process::Process(string pName, string pID, string pMemoryUsage) {
 
 }
 
-string Process::getProcessName(){
+string Process::getProcessName() {
     return ProcessName;
 }
 
-string Process::getProcessID(){
+string Process::getProcessID() {
     return ProcessID;
 }
 
-string Process::getProcessMemoryUsage(){
+string Process::getProcessMemoryUsage() {
     return ProcessMemoryUsage;
 }
 
@@ -99,5 +99,24 @@ void RunningProcesses::getAndPrintRunningProcesses() {
 //    cout << RunningProcesses[RunningProcesses.size() - 1].getProcessName();
 
     // print the running processes
+    printTheRunningProcesses();
 
+
+}
+
+void RunningProcesses::printTheRunningProcesses(){
+    cout << setw(NamePrintLength) << left << "Name" << setw(IDPrintLength) << left << "ID"
+         << setw(MemoryUsedPrintLength) << right << "Memory Used" << endl;
+
+    cout << right << setw(NamePrintLength) << setfill('-') << " " << setw(IDPrintLength) << right << setfill('-') << " "
+         << setw(MemoryUsedPrintLength) << left << setfill('-') << " " << endl;
+    cout << setfill(' ');
+
+    for (int j = 0; j < RunningProcesses.size(); ++j) {
+
+        cout << setw(NamePrintLength) << left << RunningProcesses[j].getProcessName()
+             << setw(IDPrintLength) << left << RunningProcesses[j].getProcessID()
+             << setw(MemoryUsedPrintLength) << right << RunningProcesses[j].getProcessMemoryUsage() + " kb" << endl;
+
+    }
 }
