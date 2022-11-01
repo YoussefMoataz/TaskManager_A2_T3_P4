@@ -18,6 +18,7 @@ Purpose:                Make little task manager in the terminal.
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include <iomanip>
 #include <windows.h>
 #include <stdio.h>

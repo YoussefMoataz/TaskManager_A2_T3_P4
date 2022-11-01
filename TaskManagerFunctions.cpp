@@ -108,19 +108,56 @@ void RunningProcesses::getAndPrintRunningProcesses() {
 
 //    cout << RunningProcesses[RunningProcesses.size() - 1].getProcessName();
 
+
+    string sortOption;
+    while (true) {
+        cout << "Enter 1 to sort by Name" << endl;
+        cout << "Enter 2 to sort by Process ID" << endl;
+        cout << "Enter 3 to sort by Memory Usage" << endl;
+        cin >> sortOption;
+
+        if (sortOption == "1") {
+
+            sort(RunningProcesses.begin(), RunningProcesses.end(), [](Process &lhs, Process &rhs) {
+                return lhs.getProcessName() < rhs.getProcessName();
+            });
+
+            break;
+        } else if (sortOption == "2") {
+
+            // not working t2riban
+            sort(RunningProcesses.begin(), RunningProcesses.end(), [](Process &lhs, Process &rhs) {
+                return lhs.getProcessID() < rhs.getProcessID();
+            });
+
+            break;
+        } else if (sortOption == "3") {
+
+            // not working t2riban
+            sort(RunningProcesses.begin(), RunningProcesses.end(), [](Process &lhs, Process &rhs) {
+                return lhs.getProcessMemoryUsage() < rhs.getProcessMemoryUsage();
+            });
+
+            break;
+        } else {
+            cout << "Enter a valid option" << endl;
+        }
+    }
+
     // print the running processes
     printTheRunningProcesses();
 
 
 }
 
-void RunningProcesses::printTheRunningProcesses(){
+void RunningProcesses::printTheRunningProcesses() {
     cout << setw(NamePrintLength) << left << "Name" << setw(IDPrintLength) << left << "ID"
          << setw(MemoryUsedPrintLength) << right << "Memory Used" << endl;
 
     cout << right << setw(NamePrintLength) << setfill('-') << " " << setw(IDPrintLength) << right << setfill('-') << " "
          << setw(MemoryUsedPrintLength) << left << setfill('-') << " " << endl;
     cout << setfill(' ');
+
 
     for (int j = 0; j < RunningProcesses.size(); ++j) {
 
