@@ -2,8 +2,8 @@
 FCAI - Programming 2 - 2022 - Assignment 2 - Sheet 2 - Problem 4
 Program Name:           Task Manager
 Program Description:    This program shows running processes Name, ID, Memory Usage.
-Last Modification Date: October 29, 2022
-Version:                v1.0.0
+Last Modification Date: November 6, 2022
+Version:                v1.2.0
 Author:                 Youssef Moataz
 ID:                     20210488
 Group:                  A
@@ -13,7 +13,7 @@ Purpose:                Make little task manager in the terminal.
 
 #include "TaskManagerHeader.h"
 
-Process::Process(string pName, string pID, string pMemoryUsage) {
+Process::Process(string pName, int pID, string pMemoryUsage) {
 
     ProcessName = pName;
     ProcessID = pID;
@@ -25,7 +25,7 @@ string Process::getProcessName() {
     return ProcessName;
 }
 
-string Process::getProcessID() {
+int Process::getProcessID() {
     return ProcessID;
 }
 
@@ -33,7 +33,7 @@ string Process::getProcessMemoryUsage() {
     return ProcessMemoryUsage;
 }
 
-void RunningProcesses::getAndPrintRunningProcesses() {
+void RunningProcesses::getRunningProcesses() {
 
 
     // save "tasklist" command output to file
@@ -60,7 +60,17 @@ void RunningProcesses::getAndPrintRunningProcesses() {
 
 //    cout << dataLines[0];
 
+    for (int i = 0; i < dataLines.size(); ++i) {
 
+        string currentItem = dataLines[i];
+
+        RunningProcesses.push_back(Process(currentItem.substr(0, 25),
+                                           stoi(currentItem.substr(27, 8)),
+                                           currentItem.substr(65, 9)));
+
+    }
+
+    showMenu();
 
 }
 
@@ -82,7 +92,6 @@ void RunningProcesses::showMenu() {
             break;
         } else if (sortOption == "2") {
 
-            // not working t2riban
             sort(RunningProcesses.begin(), RunningProcesses.end(), [](Process &lhs, Process &rhs) {
                 return lhs.getProcessID() < rhs.getProcessID();
             });
@@ -90,7 +99,6 @@ void RunningProcesses::showMenu() {
             break;
         } else if (sortOption == "3") {
 
-            // not working t2riban
             sort(RunningProcesses.begin(), RunningProcesses.end(), [](Process &lhs, Process &rhs) {
                 return lhs.getProcessMemoryUsage() < rhs.getProcessMemoryUsage();
             });
@@ -103,7 +111,6 @@ void RunningProcesses::showMenu() {
 
     // print the running processes
     printTheRunningProcesses();
-
 
 }
 
@@ -124,3 +131,5 @@ void RunningProcesses::printTheRunningProcesses() {
 
     }
 }
+
+// End of the file
