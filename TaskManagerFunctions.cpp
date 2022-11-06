@@ -35,79 +35,36 @@ string Process::getProcessMemoryUsage() {
 
 void RunningProcesses::getAndPrintRunningProcesses() {
 
-    // Get the list of processes.
-    DWORD aProcesses[1024], cbNeeded, cProcesses;
-    unsigned int i;
 
-    // dont know
-    if (!EnumProcesses(aProcesses, sizeof(aProcesses), &cbNeeded)) {
-        return;
+    // save "tasklist" command output to file
+    system("tasklist > RecentTasks.txt");
+
+    // open that file
+    ifstream tasksDataFile("RecentTasks.txt");
+
+    // vector to store each line
+    vector<string> dataLines;
+
+    // represents a line from file
+    string line;
+
+    // fill the vector by reading the file line by line
+    while (getline(tasksDataFile, line)) {
+
+        dataLines.push_back(line);
+
     }
 
-    // Calculate how many process identifiers were returned.
-    cProcesses = cbNeeded / sizeof(DWORD);
+    // remove first 3 lines
+    dataLines.erase(dataLines.begin(), dataLines.begin() + 3);
 
-    // Print the name and process identifier for each process.
-    DWORD processID;
-
-    string processNameToAdd;
-    string processIDToAdd;
-    string processMemoryUsageToAdd;
-
-    for (i = 0; i < cProcesses; i++) {
-        if (aProcesses[i] != 0) {
-
-            processID = aProcesses[i];
-
-            TCHAR szProcessName[MAX_PATH] = TEXT("<unknown>");
-
-            // Get a handle to the process.
-            HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION |
-                                          PROCESS_VM_READ,
-                                          FALSE, processID);
-
-            // Get the process name.
-            if (NULL != hProcess) {
-                HMODULE hMod;
-                DWORD cbNeeded;
-
-                if (EnumProcessModules(hProcess, &hMod, sizeof(hMod),
-                                       &cbNeeded)) {
-                    GetModuleBaseName(hProcess, hMod, szProcessName,
-                                      sizeof(szProcessName) / sizeof(TCHAR));
-                }
-            }
-
-            PROCESS_MEMORY_COUNTERS pmc;
-            if (GetProcessMemoryInfo(hProcess, &pmc, sizeof(pmc))) {
-//                _tprintf(TEXT("%llu  (PID: %u) - "), pmc.WorkingSetSize / 8 / 1024);
-
-                processMemoryUsageToAdd = to_string(pmc.WorkingSetSize / 8 / 1024);
+//    cout << dataLines[0];
 
 
-                // Print the process name and identifier.
-//                _tprintf(TEXT("%s  (PID: %u)\n"), szProcessName, processID);
 
-                processNameToAdd = szProcessName;
-                processIDToAdd = to_string(processID);
+}
 
-                // testing
-//                cout << processNameToAdd << endl << endl;
-//                cout << processIDToAdd << endl << endl;
-//                cout << processMemoryUsageToAdd << endl << endl;
-
-                RunningProcesses.push_back(Process(processNameToAdd, processIDToAdd, processMemoryUsageToAdd));
-
-            }
-
-            // Release the handle to the process.
-            CloseHandle(hProcess);
-
-        }
-    }
-
-//    cout << RunningProcesses[RunningProcesses.size() - 1].getProcessName();
-
+void RunningProcesses::showMenu() {
 
     string sortOption;
     while (true) {

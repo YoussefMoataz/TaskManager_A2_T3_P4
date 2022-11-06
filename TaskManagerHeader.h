@@ -20,10 +20,7 @@ Purpose:                Make little task manager in the terminal.
 #include <vector>
 #include <algorithm>
 #include <iomanip>
-#include <windows.h>
-#include <stdio.h>
-#include <tchar.h>
-#include <psapi.h>
+#include <fstream>
 
 using namespace std;
 
@@ -50,5 +47,6 @@ private:
     inline void printTheRunningProcesses();
 public:
     inline void getAndPrintRunningProcesses();
+    inline void showMenu();
 
 };
